@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cloudwise.archetype</groupId>
+        <artifactId>archetype-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>archetype-api</artifactId>
+    <description>服务api模块</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.cloudwise.douc</groupId>
+            <artifactId>douc-dubbo-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>archetype-dao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>archetype-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>archetype-middleware</artifactId>
+        </dependency>
+
+        <!-- json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-jcs-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-exec</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <!-- xml -->
+        <dependency>
+            <groupId>com.ximpleware</groupId>
+            <artifactId>vtd-xml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.siegmar</groupId>
+            <artifactId>fastcsv</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.albfernandez</groupId>
+            <artifactId>juniversalchardet</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.typesafe</groupId>
+            <artifactId>config</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

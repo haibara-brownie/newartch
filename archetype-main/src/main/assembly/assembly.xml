@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.1 https://maven.apache.org/xsd/assembly-2.1.1.xsd">
+    <id>bin</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <baseDirectory>${service-name}</baseDirectory>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>../</directory>
+            <outputDirectory>./</outputDirectory>
+            <includes>
+                <include>README*</include>
+                <include>LICENSE*</include>
+                <include>NOTICE*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>logs</directory>
+            <outputDirectory>logs</outputDirectory>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>scripts</directory>
+            <outputDirectory>scripts</outputDirectory>
+            <fileMode>755</fileMode>
+            <directoryMode>0755</directoryMode>
+            <filtered>true</filtered>
+        </fileSet>
+
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+            <excludes>
+                <exclude>bootstrap-nacos.properties</exclude>
+                <exclude>*-test.xml</exclude>
+            </excludes>
+            <filtered>true</filtered>
+        </fileSet>
+        <!-- 打包liquibase变更文件 -->
+        <fileSet>
+            <directory>../${product-name}-dao/target/classes/dbchangelogs</directory>
+            <outputDirectory>conf/dbchangelogs</outputDirectory>
+        </fileSet>
+    </fileSets>
+
+    <files>
+        <file>
+            <source>service.properties</source>
+            <outputDirectory>./</outputDirectory>
+            <destName>service.properties</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>server.yaml</source>
+            <outputDirectory>./</outputDirectory>
+            <destName>${service-name}.yaml</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>bin/service.sh</source>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>755</fileMode>
+            <destName>${service-name}</destName>
+            <!--脚本中参数变量为pom中的值 -->
+            <filtered>true</filtered>
+        </file>
+        <!-- 添加git描述文件 -->
+        <file>
+            <source>target/classes/git-${project.artifactId}.properties</source>
+            <outputDirectory>conf</outputDirectory>
+            <destName>git.properties</destName>
+        </file>
+        <!-- 重命名${product-name}.properties-->
+        <file>
+            <source>src/main/resources/bootstrap-nacos.properties</source>
+            <outputDirectory>conf/nacos/${product-name}</outputDirectory>
+            <destName>${product-name}.properties</destName>
+            <filtered>true</filtered>
+        </file>
+        <!-- 重命名权限配置文件 -->
+        <file>
+            <source>src/main/resources/nacos/gateway/aopc.auth.json</source>
+            <outputDirectory>conf/nacos/gateway</outputDirectory>
+            <destName>aopc.${product-name}.auth.config</destName>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/main/resources/nacos/portal/aopc.auth.json</source>
+            <outputDirectory>conf/nacos/portal</outputDirectory>
+            <destName>aopc.${product-name}.auth.config</destName>
+            <filtered>true</filtered>
+        </file>
+    </files>
+
+    <dependencySets>
+        <dependencySet>
+            <!--是否把本项目添加到依赖文件夹下-->
+            <outputDirectory>lib</outputDirectory>
+            <!--将scope为runtime的依赖包打包-->
+            <scope>runtime</scope>
+            <excludes>
+                <exclude>${project.groupId}:*</exclude>
+            </excludes>
+        </dependencySet>
+        <dependencySet>
+            <!--将工具类放到utils文件夹下-->
+            <outputDirectory>utils</outputDirectory>
+            <!--将scope为provided的依赖包打包-->
+            <scope>provided</scope>
+            <includes>
+                <include>com.cloudwise.architecture:nacos-util</include>
+                <include>com.cloudwise.architecture:nacos-client</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <!--该目录包含自有包-->
+            <outputDirectory>lib</outputDirectory>
+            <scope>runtime</scope>
+            <includes>
+                <include>${project.groupId}:*</include>
+            </includes>
+            <outputFileNameMapping>
+                ${artifact.artifactId}-${artifact.version}-${git.commit.time}-${git.commit.id.abbrev}.${artifact.extension}
+            </outputFileNameMapping>
+        </dependencySet>
+    </dependencySets>
+
+</assembly>

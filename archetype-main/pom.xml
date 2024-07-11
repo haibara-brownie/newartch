@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cloudwise.archetype</groupId>
+        <artifactId>archetype-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>archetype-main</artifactId>
+    <description>服务启动及构建模块</description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <!--产品名称-->
+        <product-name>archetype</product-name>
+        <!--主应用服务名称-->
+        <service-name>archetypeServer666</service-name>
+        <!--启动类全限定名-->
+        <start-class>com.cloudwise.archetype.main.MainApplication</start-class>
+        <!--构建版本号-->
+        <product-service-version>1.0.0</product-service-version>
+        <ignore-omp-none-args>False</ignore-omp-none-args>
+        <!--启动内存-->
+        <memory-size>1024M</memory-size>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>archetype-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudwise.architecture</groupId>
+            <artifactId>nacos-util</artifactId>
+            <classifier>dependencies</classifier>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudwise.architecture</groupId>
+            <artifactId>nacos-client</artifactId>
+            <classifier>dependencies</classifier>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>git-${project.artifactId}.properties</include>
+                        <include>**/com/cloudwise/**</include>
+                    </includes>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>make-assembly-prod</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <skipAssembly>false</skipAssembly>
+                            <descriptors>
+                                <descriptor>src/main/assembly/assembly.xml</descriptor>
+                            </descriptors>
+                            <finalName>${service-name}-${product-service-version}-${git.commit.time}-${git.commit.id.abbrev}
+                            </finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

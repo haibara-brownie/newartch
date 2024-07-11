@@ -1,0 +1,105 @@
+props:
+  decrypt:
+    props: cwNacosPassword,dbWritePassword,springActuatorPassword,prometheusPassword,chPassword,redisPassword,redisSentinelPassword,cwXxlJobPassword,postgresqlWritePwd,panguDBWritePwd
+server:
+  address: ${cwServiceHostname:}
+  compression:
+    enabled: true
+    min-response-size: 1024
+  port: ${cwServicePort:8098}
+  servlet:
+    encoding:
+      enabled: true
+      force: true
+  tomcat:
+    mbeanregistry:
+      enabled: true
+spring:
+  application:
+    name: archetype-service-purewise666
+  kafka:
+    bootstrap-servers: 10.102.1.5:18108
+    consumer:
+      group-id: air-group
+      auto-offset-reset: earliest
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  #    kafka:
+  #        bootstrap-servers: 10.102.1.5:18108
+  #        producer:
+  #            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+  #            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  #            acks: 1
+  #        consumer:
+  #            group-id: demo
+  #            enable-auto-commit: false
+  #            auto-commit-interval: 1000
+  #            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  #            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  #        listener:
+  #            ack-mode: manual_immediate
+  cloud:
+    httpclientfactories:
+      ok:
+        enabled: false
+    nacos:
+      config:
+        context-path: /nacos
+        enabled: true
+        extension-configs:
+          - data-id: ${spring.application.name}.properties
+            group: archetype
+            refresh: true
+        group: archetype
+        namespace: ${cwNacosNamespace}
+        password: ${spring.cloud.nacos.password:}
+        server-addr: ${spring.cloud.nacos.server-addr:}
+        shared-configs:
+          - data-id: commons.properties
+            group: commons
+            refresh: true
+        username: ${spring.cloud.nacos.username:}
+      discovery:
+        ip: ${cwServiceHostname:}
+        namespace: ${cwNacosNamespace}
+        password: ${spring.cloud.nacos.password:}
+        server-addr: ${spring.cloud.nacos.server-addr:}
+        username: ${spring.cloud.nacos.username:}
+      password: ${cwNacosPassword:Nacos_654321}
+      server-addr: ${cwNacosServer}
+      username: ${cwNacosUserName:nacos}
+  datasource:
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 60000
+      idle-timeout: 500000
+      max-lifetime: 540000
+      maximum-pool-size: 200
+      minimum-idle: 50
+      pool-name: hikariPool
+      validationTimeout: 5000
+    password: ${panguDBWritePwd:}
+    type: com.zaxxer.hikari.HikariDataSource
+    url: ${panguDBWriteJdbcUrl:}
+    username: ${panguDBWriteUser:}
+  jackson:
+    default-property-inclusion: non_null
+  liquibase:
+    enabled: false
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+    static-path-pattern: /**
+  profiles:
+    include: nacos,dubbo
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+  web:
+    resources:
+      static-locations: file:statics

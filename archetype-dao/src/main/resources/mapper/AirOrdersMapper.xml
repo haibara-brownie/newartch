@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudwise.archetype.dao.mapper.AirOrdersMapper">
+
+    <resultMap id="BaseResultMap" type="com.cloudwise.archetype.dao.activerecord.AirOrders">
+            <id property="oid" column="oid" jdbcType="VARCHAR"/>
+            <result property="aid" column="aid" jdbcType="VARCHAR"/>
+            <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+            <result property="ocreateId" column="ocreate_id" jdbcType="INTEGER"/>
+            <result property="ocreateTime" column="ocreate_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        oid,aid,quantity,
+        ocreate_id,ocreate_time
+    </sql>
+</mapper>

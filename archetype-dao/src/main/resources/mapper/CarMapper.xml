@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudwise.archetype.dao.mapper.CarMapper">
+
+    <resultMap id="BaseResultMap" type="com.cloudwise.archetype.dao.activerecord.Car">
+            <id property="carId" column="car_id" jdbcType="VARCHAR"/>
+            <result property="brand" column="brand" jdbcType="VARCHAR"/>
+            <result property="color" column="color" jdbcType="VARCHAR"/>
+            <result property="price" column="price" jdbcType="NUMERIC"/>
+            <result property="productionDate" column="production_date" jdbcType="DATE"/>
+            <result property="model" column="model" jdbcType="VARCHAR"/>
+            <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        car_id,brand,color,
+        price,production_date,model,
+        created_by,created_at,updated_at
+    </sql>
+</mapper>

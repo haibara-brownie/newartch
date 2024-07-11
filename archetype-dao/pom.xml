@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cloudwise.archetype</groupId>
+        <artifactId>archetype-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>archetype-dao</artifactId>
+    <description>数据管理服务(关系数据库访问层)</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- liquibase -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+        </dependency>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <!-- jdbc驱动 -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.oscar</groupId>
+            <artifactId>oscarJDBC</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dameng</groupId>
+            <artifactId>DmJdbcDriver18</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.oceanbase</groupId>
+            <artifactId>oceanbase-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opengauss</groupId>
+            <artifactId>opengauss-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+        </dependency>
+        <!--连接池-->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+        <!--orm代码生成-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--基础服务依赖-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>archetype-commons</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>git-${project.artifactId}.properties</include>
+                        <include>**/com/cloudwise/**</include>
+                    </includes>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-core</artifactId>
+                        <version>${liquibase-core.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <!--指定执行主文件 -->
+                    <changeLogFile>${basedir}/src/main/resources/dbchangelogs/changelog.xml</changeLogFile>
+                    <diffChangeLogFile>${basedir}/src/main/resources/changelog_${maven.build.timestamp}.xml
+                    </diffChangeLogFile>
+                    <outputChangeLogFile>${basedir}/src/main/resources/expsChangelog.xml</outputChangeLogFile>
+
+                    <!-- diff源 -->
+                    <driver>com.mysql.cj.jdbc.Driver</driver>
+                    <url>jdbc:mysql://localhost:3306/cw_archetype</url>
+                    <username>root</username>
+                    <password>root</password>
+
+                    <!--diff目标 -->
+                    <referenceDriver>com.mysql.cj.jdbc.Driver</referenceDriver>
+                    <referenceUrl>jdbc:mysql://localhost:3306/cw_archetype_diff</referenceUrl>
+                    <referenceUsername>root</referenceUsername>
+                    <referencePassword>root</referencePassword>
+
+                    <dropFirst>false</dropFirst>
+                    <defaultSchemaName/>
+                    <verbose>true</verbose>
+                    <logging>debug</logging>
+
+                    <!-- 是否需要弹出确认框 -->
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                    <!--输出文件的编码 -->
+                    <outputFileEncoding>${project.build.sourceEncoding}</outputFileEncoding>
+                    <!--执行的时候是否显示详细的参数信息 -->
+                    <verbose>true</verbose>
+                    <!--是否每次都重新加载properties -->
+                    <propertyFileWillOverride>true</propertyFileWillOverride>
+                    <rollbackTag>${project.version}</rollbackTag>
+                    <tag>${project.version}</tag>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

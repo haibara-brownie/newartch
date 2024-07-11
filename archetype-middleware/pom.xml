@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.cloudwise.archetype</groupId>
+        <artifactId>archetype-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>archetype-middleware</artifactId>
+    <description>服务依赖中间件模块</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>archetype-commons</artifactId>
+        </dependency>
+        <!--依赖中间件-->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudwise.architecture</groupId>
+            <artifactId>cacheutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudwise.architecture</groupId>
+            <artifactId>ossutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudwise.architecture</groupId>
+            <artifactId>msgutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

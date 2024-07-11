@@ -1,0 +1,30 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="jamin" id="archetype-001-001">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="archetype_test"/>
+            </not>
+        </preConditions>
+        <createTable tableName="archetype_test">
+            <column autoIncrement="true" name="id" type="BIGINT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="account_id" type="BIGINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="TINYINT(3) UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="BIGINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_time" type="BIGINT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

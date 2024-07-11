@@ -1,0 +1,18 @@
+{
+  "routeId": "${product-name}",
+  "moduleCode": "10086",
+  "moduleName": "脚手架平台",
+  "moduleEnName": "${product-name}",
+  "renew": true,
+  "menus": [
+    {
+      "code": "105001",
+      "name": "概览",
+      "enName": "Overview",
+      "type": 1,
+      "parentCode": "",
+      "uri": "${product-name}/dashboard",
+      "funcUrlList": []
+    }
+  ]
+}

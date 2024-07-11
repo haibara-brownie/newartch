@@ -1,0 +1,6 @@
+# Project exclude paths
+/archetype-api/target/
+/archetype-commons/target/
+/archetype-dao/target/
+/archetype-main/target/
+/archetype-middleware/target/
